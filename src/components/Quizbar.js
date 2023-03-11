@@ -1,4 +1,6 @@
 import React from 'react'
+import QuizType from './QuizType'
+
 
 export default function QuizBar(props) {
     
@@ -6,15 +8,11 @@ export default function QuizBar(props) {
         <div className='quizBar'>
             <h1>Choose your study type</h1>
             <ul className='nav nav-pills nav-fill'>
-                <li className='col-sm-3 text-center'>
-                    <div className='nav-card'>
-                        Random text
-                    </div>
-
-                </li>
-
-            </ul>
-
+                <QuizType icon="dice" quizType="Random" />
+                <QuizType icon="file-alt" quizType="Regular" />
+                <QuizType icon="dumbbell" quizType="Weighted" />
+                <QuizType icon="font" quizType="Multi" />
+           </ul>
         </div>
     )
 }
