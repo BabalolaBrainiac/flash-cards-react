@@ -5,12 +5,12 @@ export default function RegularCard(props) {
 	const questionRes = props.questionData;
 
 	return (
-		<div>
+		<>
 			<div className="card-back">{questionRes.service}</div>
 			<div className="card-front">
 				<div>{questionRes.desc}</div>
 				<div>{questionRes.cat}</div>
 			</div>
-		</div>
+		</>
 	);
 }
