@@ -5,14 +5,21 @@ import QuizBar from "./components/Quizbar";
 class App extends Component {
 	constructor() {
 		super();
-
 		this.state = {
 			cardStyle: "Random",
+			isReady: false,
 		};
 	}
 	userChoice = (cardStyle) => {
 		this.setState({
 			cardStyle: cardStyle,
+			isReady: false,
+		});
+	};
+
+	nowReady = () => {
+		this.setState({
+			isReady: true,
 		});
 	};
 
@@ -22,7 +29,11 @@ class App extends Component {
 			<div className="App align-items-center d-flex">
 				<div className="container">
 					<QuizBar userChoice={this.userChoice} />
-					<Flashcards cardStyle={this.state.cardStyle} />
+					<Flashcards
+						cardStyle={this.state.cardStyle}
+						nowReady={this.nowReady}
+						isReady={this.state.isReady}
+					/>
 				</div>
 			</div>
 		);

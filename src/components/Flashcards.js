@@ -3,6 +3,8 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { Component } from "react";
+import MultiCard from "./MultiCard";
+import RandomWeighted from "./RandomWeighted";
 import RegularCard from "./RegularCard";
 library.add(faSpinner);
 class Flashcards extends Component {
@@ -22,7 +24,7 @@ class Flashcards extends Component {
 
 	newCard = () => {
 		let path;
-		console.log(this.props.cardStyle);
+		// console.log(this.props.cardStyle);
 		const cardStyle = this.props.cardStyle;
 
 		if (cardStyle === "Regular" || cardStyle === "Random") {
@@ -40,6 +42,7 @@ class Flashcards extends Component {
 					questionData: res.data,
 					isReady: true,
 				});
+				this.props.nowReady();
 			})
 			.catch((err) => {
 				return err;
@@ -54,7 +57,7 @@ class Flashcards extends Component {
 	};
 
 	render() {
-		if (!this.state.isReady) {
+		if (!this.props.isReady) {
 			this.newCard();
 			return (
 				<div className="spinner-wrapper">
@@ -62,13 +65,25 @@ class Flashcards extends Component {
 				</div>
 			);
 		}
+
+		const cardStyle = this.props.cardStyle;
+		let CardComponent;
+		if (cardStyle === "Regular") {
+			CardComponent = <RegularCard questionData={this.state.questionData} />;
+		} else if (cardStyle === "Multi") {
+			CardComponent = <MultiCard questionData={this.state.questionData} />;
+		} else {
+			CardComponent = <RandomWeighted questionData={this.state.questionData} />;
+		}
+
+		console.log(CardComponent);
 		return (
 			<div>
 				<div className="row align-items-center card-holder">
 					<div
 						onClick={this.handleFlip}
 						className={`col-sm-3 offset-sm-3 card mb-3 ${this.state.flipClass}`}>
-						<RegularCard questionData={this.state.questionData} />
+						{CardComponent}
 					</div>
 				</div>
 				<button onClick={this.newCard} className="btn btn-primary btn-lg">
